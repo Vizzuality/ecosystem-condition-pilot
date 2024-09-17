@@ -1,0 +1,116 @@
+predicts_sites:
+  type: pandas.CSVDataset
+  filepath: data/01_raw/PREDICTs_coords.csv
+  load_args:
+    nrows: 100
+
+
+landsat7_stac_items:
+  type: ecosystem_condition_pilot.datasets.dask_partitioned_dataset.DaskPartitionedDataset
+  dataset: 
+    type: json.JSONDataset
+  path: data/01_raw/landsat7_stac_items
+  behavior: complete_missing
+  filename_suffix: .json
+
+
+landsat7_stacks:
+  type: ecosystem_condition_pilot.datasets.dask_partitioned_dataset.DaskPartitionedDataset
+  dataset:
+    type: ecosystem_condition_pilot.datasets.GeoTIFFDataset
+    save_args:
+      compress: zstd
+      predictor: 2
+  path: data/01_raw/landsat7_stacks
+  behavior: complete_missing
+  filename_suffix: .tif
+
+
+landsat7_qa_stacks:
+  type: ecosystem_condition_pilot.datasets.DaskPartitionedDataset
+  dataset:
+    type: ecosystem_condition_pilot.datasets.GeoTIFFDataset
+    save_args:
+      compress: zstd
+      predictor: 2
+  path: data/01_raw/landsat7_qa_stacks
+  behavior: complete_missing
+  filename_suffix: .tif
+
+
+landsat7_chips_filled:
+  type: ecosystem_condition_pilot.datasets.DaskPartitionedDataset
+  dataset: 
+    type: ecosystem_condition_pilot.datasets.GeoTIFFDataset
+    save_args:
+      compress: zstd
+      predictor: 2
+  path: data/02_intermediate/landsat7_chips_filled
+  behavior: complete_missing
+  filename_suffix: .tif
+
+
+landsat7_chips_encoded:
+  type: ecosystem_condition_pilot.datasets.DaskPartitionedDataset
+  dataset: 
+    type: pandas.ParquetDataset
+  path: data/03_primary/landsat7_chips_encoded
+  behavior: complete_missing
+  filename_suffix: .parquet
+
+
+landsat7_encoded_chips:
+  type: pandas.ParquetDataset
+  filepath: data/03_primary/landsat7_encoded_chips.parquet
+
+
+predicts_sites_usa:
+  type: pandas.CSVDataset
+  filepath: data/01_raw/PREDICTs_coords_USA.csv
+
+
+naip_stac_items:
+  type: ecosystem_condition_pilot.datasets.dask_partitioned_dataset.DaskPartitionedDataset
+  dataset: 
+    type: json.JSONDataset
+  path: data/01_raw/naip_stac_items
+  behavior: complete_missing
+  filename_suffix: .json
+
+
+naip_stacks:
+  type: ecosystem_condition_pilot.datasets.dask_partitioned_dataset.DaskPartitionedDataset
+  dataset:
+    type: ecosystem_condition_pilot.datasets.GeoTIFFDataset
+    save_args:
+      compress: zstd
+      predictor: 2
+  path: data/01_raw/naip_stacks
+  behavior: complete_missing
+  filename_suffix: .tif
+
+
+naip_stacks_filtered:
+  type: ecosystem_condition_pilot.datasets.dask_partitioned_dataset.DaskPartitionedDataset
+  dataset:
+    type: ecosystem_condition_pilot.datasets.GeoTIFFDataset
+    save_args:
+      compress: zstd
+      predictor: 2
+  path: data/02_intermediate/naip_stacks_filtered
+  behavior: complete_missing
+  filename_suffix: .tif
+
+
+naip_chips_encoded:
+  type: ecosystem_condition_pilot.datasets.RobustPartitionedDataset
+  dataset: 
+    type: pandas.ParquetDataset
+  path: data/03_primary/naip_chips_encoded
+  behavior: complete_missing
+  filename_suffix: .parquet
+
+
+naip_encoded_chips:
+  type: pandas.ParquetDataset
+  filepath: data/03_primary/naip_encoded_chips.parquet
