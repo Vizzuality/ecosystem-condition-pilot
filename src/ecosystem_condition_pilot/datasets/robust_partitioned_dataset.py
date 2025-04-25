@@ -116,7 +116,7 @@ class RobustPartitionedDataset(PartitionedDataset):
                 return False
             if partition == checkpoint_path:
                 return False
-            if checkpoint_ids and partition not in checkpoint_ids:
+            if checkpoint_ids and self._path_to_partition(partition) not in checkpoint_ids:
                 return False
             return True
 

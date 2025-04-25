@@ -31,10 +31,10 @@ def _search_stac_items(lat, lon, date):
     end = (pd.to_datetime(date) + pd.Timedelta(days=SEARCH_DAYS/2)).strftime("%Y-%m-%d")
     stac_api_io = StacApiIO(max_retries=Retry(total=5, backoff_factor=5))
     catalog = pystac_client.Client.open(STAC_API, stac_io=stac_api_io)
-    search = catalog.search(
-        collections=[COLLECTION],
-        datetime=f"{start}/{end}",
-        bbox=(lon - 1e-5, lat - 1e-5, lon + 1e-5, lat + 1e-5),
+        search = catalog.search(
+            collections=[COLLECTION],
+            datetime=f"{start}/{end}",
+            bbox=(lon - 1e-5, lat - 1e-5, lon + 1e-5, lat + 1e-5),
         max_items=100,
         query={"eo:cloud_cover": {"lt": CLOUDMAX}, "platform": {"eq": "landsat-7"}},
     )

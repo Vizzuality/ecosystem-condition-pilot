@@ -98,5 +98,5 @@ class DaskPartitionedDataset(RobustPartitionedDataset):
                 future.release()
         if errors:
             raise DatasetError(f"{len(errors)} errors occurred while saving partitions.")
-
+        client.shutdown()
         client.close()
